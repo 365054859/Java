@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dao.GoodsMapper">
+	<sql id="goodsColumn">
+		good_id,good_name,good_price
+	</sql>
+	
+	<resultMap type="com.entity.Goods" id="goodsBaseMap">
+		<id column="goods_id" property="goodsId"/>
+		<result column="goods_name" property="goodsName"/>
+		<result column="goods_price" property="goodsPrice"/>
+	</resultMap>
+	
+	<insert id="save" parameterType="com.entity.Goods">
+		insert into goods values(#{goodsId},#{goodsName},#{goodsPrice})
+	</insert>
+	
+	<delete id="delete" parameterType="com.entity.Goods">
+		delete from goods where  good_id = #{goodsId}
+		<!-- <where>
+			<if test="goodsId!=0"> good_id = #{goodsId} </if>
+		</where>  -->
+	</delete>
+	
+	<update id="update" parameterType="com.entity.Goods">
+		update goods set good_name = #{goodsName},good_price = #{goodsPrice}
+		where good_id = #{goodsId}
+	</update>
+	
+	<select id="selectById" parameterType="com.entity.Goods">
+		select <include refid="goodsColumn"/> from goods where good_id = #{goodsId}
+		<!-- <where>
+			<if test="id!=0">good_id = #{goodsId}</if>
+		</where> -->
+	</select>
+	
+	<select id="selectAll" resultType="com.entity.Goods">
+	select <include refid="goodsColumn"></include>
+	from goods
+	</select>
+	
+</mapper>
